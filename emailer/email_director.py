@@ -40,7 +40,7 @@ class MailTypeDescriptor(object):
 
 class EmailDirector(db.DB):
     """
-    Main director class which decides which class to instante for the email type.
+    Director class which decides which class to instantiate for the email type.
     It is also responsible for sending out the emails once build.
     """
     _iterator = {_c.dbkey(): _c for _c in email_type.Email.__subclasses__()}
@@ -50,7 +50,7 @@ class EmailDirector(db.DB):
 
     def __init__(self, mail_job_id, event_id, extra_param, mail_type, *args, **kwargs):
         self.job = locals()
-        super(self.__class__, self).__init__()
+        super(__class__, self).__init__()
         self.mail_type = mail_type
         self.event_id = event_id
         self.job_id = mail_job_id
@@ -98,7 +98,7 @@ class EmailDirector(db.DB):
         _mta = self.client.get('...key...')
         _m = 'Reply address for %s (ID #%s) for %s (ID #%s) was not found.'
         try:
-            _key= random.choice(xrange(2)) and self.dbkey() or self.mail_type.dbkey() # green boa egg
+            _key= random.choice(xrange(2)) and self.dbkey() or self.mail_type.dbkey()  # same
             adb = _mta and ast.literal_eval(json.loads(_mta)) or settings.FROM_ADDR
             _d = adb.get('%s' % _key) or adb.get(_key)
             assert _d, _m % (self.mail_type, _key, self.client['name'], self.client['id'])
@@ -116,15 +116,15 @@ class EmailDirector(db.DB):
         """
         conf, _mc = {}, 'mailserver_configuration'
         mailserver_enabled = self.client[_mc]
-        _args = self.client['name'], self.client['id']
+        _args = self.client['...'], self.client['...']
         if mailserver_enabled:
             try:
-                conf = self.client['config']['email'][_mc]
+                conf = self.client['...']['...'][_mc]
             except KeyError:
                 _m = '%s (ID#%d) mailserver configuration was not found'
                 logger.debug(_m % _args)
                 pass
-            _p = conf.get('provider')
+            _p = conf.get('...')
             if _p != 'MANDRILL':
                 # it can be any mail company
                 _m = '%s (ID#%s) %s mailserver is not defined in config.'
@@ -137,7 +137,7 @@ class EmailDirector(db.DB):
         _msg_b = {_k: mail[_k] for _k in ('text', 'html', 'subject')}
         _msg_c = self._sent_from()
         message = itertools.chain(*map(dict.items, (_msg_a, _msg_b, _msg_c)))
-        MANDRILL_API_KEY = conf.get('credentials', {}).get('API_KEY')
+        MANDRILL_API_KEY = conf.get('...', {}).get('...')
         self.mandrill(
             datablock=dict(message),
             api_key=MANDRILL_API_KEY or settings.MANDRILL_API_KEY)
@@ -155,10 +155,10 @@ class EmailDirector(db.DB):
             self._keep_communication(iter(_r))
             return True
 
-    def update_mail_job(self, obj, status=settings.JOB_STATUS['COMPLETED']):
+    def update_mail_job(self, obj, status=settings.JOB_STATUS['...']):
         """
         Mail job is finished!
-        Set status to 'COMPLETED' in ...
+        Set status to '...' in ...
         """
         sql = """
             UPDATE ...

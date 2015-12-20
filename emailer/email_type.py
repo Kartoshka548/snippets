@@ -135,7 +135,7 @@ class Email(DB):
     def _build_link_to_admin_page(self, _prop=None):
         """
         Links to event admin which will be included in customer communication emails.
-        Currently, only VideosSent make use of this feature.
+        Currently, only ... make use of this feature.
         """
         _c = self.client['...']
         if not _c:
@@ -178,7 +178,7 @@ class ...(Email):
     }
 
     def __init__(self, job):
-        super(Invite, self).__init__(job)
+        super(..., self).__init__(job)
         self.email_template = '....html'
         self.subject_template = '....txt'
 
