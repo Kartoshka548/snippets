@@ -3,16 +3,18 @@ import datetime
 
 class UTC(datetime.tzinfo):
     """
-    UTC tzinfo object
+    UTC tzinfo object used in datetime as tzinfo keyword argument:
+        (usage)
+        datetime.datetime(1970, 1, 1, tzinfo=UTC())
 
-    oneliner:
-        UTC = type(
-            'UTC',
-            (datetime.tzinfo,),
-            {'utcoffset': lambda *_: datetime.timedelta(0)})
+    ----- oneliner -----
+        # UTC = type(
+        #     'UTC',
+        #     (datetime.tzinfo,),
+        #     {'utcoffset': lambda *_: datetime.timedelta(0)})
 
-    (almost) proper OO;
-        # utcoffset = lambda *args: _ZERO
+    ----- (almost) proper OO -----
+        # utcoffset = lambda *args: datetime.timedelta(0)
         # tzname = lambda *args: "UTC"
         # dst = utcoffset
     """
