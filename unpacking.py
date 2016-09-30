@@ -36,6 +36,23 @@ class Thing(object):
         return iter(self.mode)
 
 
+class _AWS(object):
+    """
+    A little different from others: unpackable
+    """
+    _KEYS = 'aws_access_key_id', 'aws_secret_access_key'
+    _CREDENTIALS = {
+        'A': ('A', 'B'),
+        'AA': ('AA', 'BB'),
+        'AAA': ('AAA', 'BBB')}
+    __iter__ = lambda self: iter(self._.keys())
+    __len__ = lambda self: len(self._.keys())
+    __getitem__ = lambda self, key: self._[key]
+    __init__ = lambda self, env: setattr(
+        self, '_', dict(zip(self._KEYS, self._CREDENTIALS[env])))
+    keys = lambda self: list(self._.keys())
+
+
 if __name__ in ('__main__',):
     thing = Thing()
 
@@ -47,3 +64,9 @@ if __name__ in ('__main__',):
 
     # {'hello world': 'I am a potato!!'}
     print(dict(**thing))
+
+    AWS = _AWS('AA')
+    # aws_access_key_id aws_secret_access_key
+    print(*AWS)
+    # {'aws_access_key_id': 'AA', 'aws_secret_access_key': 'BB'}
+    print(dict(AWS))
